@@ -577,10 +577,12 @@ public partial class HubConnection : IAsyncDisposable
                         TaskScheduler.Default);
                 }
 
+#pragma warning disable CA2252 // This API requires opting into preview features
                 if (connectionState.Connection.Features.Get<IReconnectFeature>() is IReconnectFeature feature)
                 {
                     feature.DisableReconnect();
                 }
+#pragma warning restore CA2252 // This API requires opting into preview features
             }
             else
             {
@@ -1091,10 +1093,12 @@ public partial class HubConnection : IAsyncDisposable
                     Log.ReceivedCloseWithError(_logger, close.Error);
                 }
 
+#pragma warning disable CA2252 // This API requires opting into preview features
                 if (connectionState.Connection.Features.Get<IReconnectFeature>() is IReconnectFeature feature)
                 {
                     feature.DisableReconnect();
                 }
+#pragma warning restore CA2252 // This API requires opting into preview features
 
                 return close;
             case PingMessage _:
@@ -1908,12 +1912,14 @@ public partial class HubConnection : IAsyncDisposable
             _logger = _hubConnection._logger;
             _hasInherentKeepAlive = connection.Features.Get<IConnectionInherentKeepAliveFeature>()?.HasInherentKeepAlive ?? false;
 
+#pragma warning disable CA2252 // This API requires opting into preview features
             if (Connection.Features.Get<IReconnectFeature>() is IReconnectFeature feature)
             {
                 _messageBuffer = new MessageBuffer(connection, hubConnection._protocol);
 
                 feature.NotifyOnReconnect = _messageBuffer.Resend;
             }
+#pragma warning restore CA2252 // This API requires opting into preview features
         }
 
         public string GetNextId() => (++_nextInvocationId).ToString(CultureInfo.InvariantCulture);

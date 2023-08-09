@@ -5050,7 +5050,9 @@ public partial class HubConnectionHandlerTests : VerifiableLoggedTest
 
             using var client = new TestClient();
             var reconnectFeature = new TestReconnectFeature();
+#pragma warning disable CA2252 // This API requires opting into preview features
             client.Connection.Features.Set<IReconnectFeature>(reconnectFeature);
+#pragma warning restore CA2252 // This API requires opting into preview features
 
             var connectionHandlerTask = await client.ConnectAsync(connectionHandler);
             UpdateConnectionPair(client.Connection);
@@ -5112,7 +5114,9 @@ public partial class HubConnectionHandlerTests : VerifiableLoggedTest
             using var client = new TestClient();
 
             var reconnectFeature = new TestReconnectFeature();
+#pragma warning disable CA2252 // This API requires opting into preview features
             client.Connection.Features.Set<IReconnectFeature>(reconnectFeature);
+#pragma warning restore CA2252 // This API requires opting into preview features
 
             var connectionHandlerTask = await client.ConnectAsync(connectionHandler);
 
@@ -5129,15 +5133,21 @@ public partial class HubConnectionHandlerTests : VerifiableLoggedTest
         }
     }
 
+#pragma warning disable CA2252 // This API requires opting into preview features
     private class TestReconnectFeature : IReconnectFeature
+#pragma warning restore CA2252 // This API requires opting into preview features
     {
         private TaskCompletionSource _reconnectDisabled = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
 
         public Task ReconnectDisabled => _reconnectDisabled.Task;
 
+#pragma warning disable CA2252 // This API requires opting into preview features
         public Action<PipeWriter> NotifyOnReconnect { get; set; } = (_) => { };
+#pragma warning restore CA2252 // This API requires opting into preview features
 
+#pragma warning disable CA2252 // This API requires opting into preview features
         public void DisableReconnect()
+#pragma warning restore CA2252 // This API requires opting into preview features
         {
             _reconnectDisabled.TrySetResult();
         }
