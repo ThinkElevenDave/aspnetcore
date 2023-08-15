@@ -15,7 +15,8 @@ public class ValidationMessage<TValue> : ComponentBase, IDisposable
     private Expression<Func<TValue>>? _previousFieldAccessor;
     private readonly EventHandler<ValidationStateChangedEventArgs>? _validationStateChangedHandler;
     private FieldIdentifier _fieldIdentifier;
-
+    public string ValidationMessageClassName = "validation-message";
+    
     /// <summary>
     /// Gets or sets a collection of additional attributes that will be applied to the created <c>div</c> element.
     /// </summary>
@@ -71,7 +72,7 @@ public class ValidationMessage<TValue> : ComponentBase, IDisposable
         foreach (var message in CurrentEditContext.GetValidationMessages(_fieldIdentifier))
         {
             builder.OpenElement(0, "div");
-            builder.AddAttribute(1, "class", "validation-message");
+            builder.AddAttribute(1, "class", ValidationMessageClassName);
             builder.AddMultipleAttributes(2, AdditionalAttributes);
             builder.AddContent(3, message);
             builder.CloseElement();
